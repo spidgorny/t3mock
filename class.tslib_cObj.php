@@ -19,4 +19,17 @@ class tslib_cObj {
 		}
 	}
 
+	function getSubpart($template, $part) {
+//		debug($template, $part);
+		$parts = trimExplode($part, $template);
+		$templatePart = $parts[1];
+		return $templatePart;
+	}
+
+	function substituteSubpart($template, $part, $replacement) {
+		$subPart = $this->getSubpart($template, $part);
+		$replaced = str_replace($subPart, $replacement, $template);
+		return $replaced;
+	}
+
 }

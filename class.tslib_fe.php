@@ -17,6 +17,8 @@ class tslib_fe {
 
 	var $csConvObj;
 
+	var $absRefPrefix = '';
+
 	function __construct() {
 		$this->fe_user = new tslib_feUserAuth();
 		$this->id = 1;

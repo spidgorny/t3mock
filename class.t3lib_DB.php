@@ -8,7 +8,7 @@ class t3lib_DB {
 	var $config;
 
 	/**
-	 * @var MySQL4RP
+	 * @var MySQL4RP|MySQL4RPi
 	 */
 	var $db;
 
@@ -19,6 +19,11 @@ class t3lib_DB {
 	 */
 	public $debug_lastBuiltQuery;
 
+	/**
+	 * @var string
+	 */
+	public $store_lastBuiltQuery;
+
 	function __construct() {
 		$this->config = Config::getInstance();
 		$this->db = $this->config->getDB();
@@ -28,10 +33,13 @@ class t3lib_DB {
 		return $this->db->perform($query);
 	}
 
-	function SELECTquery($what, $table, $where, $heh = NULL, $order = '', $limit = NULL) {
+	function SELECTquery($what, $table, $where, $groupBy = NULL, $order = '', $limit = NULL) {
 		$sql = "SELECT $what FROM $table";
 		if ($where) {
 			$sql .= " WHERE $where";
+		}
+		if ($groupBy) {
+			$sql .= " GROUP BY $groupBy";
 		}
 		if ($order) {
 			$sql .= " ORDER BY $order";
@@ -43,8 +51,8 @@ class t3lib_DB {
 		return $sql;
 	}
 
-	function exec_SELECTquery($what, $table, $where, $heh = NULL, $order = '') {
-		$sql = $this->SELECTquery($what, $table, $where, $heh, $order);
+	function exec_SELECTquery($what, $table, $where, $groupBy = NULL, $order = '') {
+		$sql = $this->SELECTquery($what, $table, $where, $groupBy, $order);
 		return $this->sql_query($sql);
 	}
 
@@ -108,7 +116,7 @@ class t3lib_DB {
 	/**
 	 * Retrieves data from MySQL result object in to array.
 	 *
-	 * @param resource $res
+	 * @param resource|string $res
 	 * @param string $column	Only this column will be the value of the arrays
 	 * @param string $key		Data will be associated with this column
 	 * @return array
@@ -152,6 +160,16 @@ class t3lib_DB {
 
 	function sql_affected_rows($res = NULL) {
 		return $this->db->affectedRows($res);
+	}
+
+	function exec_SELECT_queryArray(array $parts) {
+//		$query = 'SELECT '.$parts['SELECT'].
+//				' FROM '.$parts['FROM'].
+//				' WHERE '.$parts['WHERE'].
+//				' GROUP BY '.$parts['GROUPBY'].
+//				' ORDER BY '.$parts['ORDERBY'];
+		return $this->exec_SELECTquery($parts['SELECT'], $parts['FROM'],
+				$parts['WHERE'], $parts['GROUPBY'], $parts['ORDERBY']);
 	}
 
 }

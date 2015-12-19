@@ -2,8 +2,8 @@
 
 class t3lib_div {
 
-	static function makeInstance($class, $what_is_it = NULL) {
-		return new $class($what_is_it);
+	static function makeInstance($class, $what_is_it = NULL, $p2 = NULL) {
+		return new $class($what_is_it, $p2);
 	}
 
 	/**

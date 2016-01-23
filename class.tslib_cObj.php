@@ -22,7 +22,7 @@ class tslib_cObj {
 	function getSubpart($template, $part) {
 //		debug($template, $part);
 		$parts = trimExplode($part, $template);
-		$templatePart = $parts[1];
+		$templatePart = ifsetor($parts[1]);
 		return $templatePart;
 	}
 

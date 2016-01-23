@@ -19,7 +19,9 @@ class tslib_feUserAuth {
 		$this->feUser = $session->getUserBySession();
 		if ($this->feUser) {
 			$this->user = $this->feUser->data;
-			$this->uc = unserialize($this->user['uc']);
+			if ($this->user) {
+				$this->uc = unserialize($this->user['uc']);
+			}
 			//debug($this->uc);
 		}
 	}

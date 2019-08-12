@@ -1,8 +1,10 @@
 <?php
 
-class t3lib_div {
+class t3lib_div
+{
 
-	static function makeInstance($class, $what_is_it = NULL, $p2 = NULL) {
+	static function makeInstance($class, $what_is_it = NULL, $p2 = NULL)
+	{
 		return new $class($what_is_it, $p2);
 	}
 
@@ -15,10 +17,19 @@ class t3lib_div {
 	 * @param integer $errorMode Error mode (when file could not be found): 0 - syslog entry, 1 - do nothing, 2 - throw an exception
 	 * @return array Value of $LOCAL_LANG found in the included file. If that array is found it will returned.
 	 */
-	static public function readLLfile($fileRef, $langKey, $charset = '', $errorMode = 0) {
+	static public function readLLfile($fileRef, $langKey, $charset = '', $errorMode = 0)
+	{
 		/** @var $languageFactory \TYPO3\CMS\Core\Localization\LocalizationFactory */
 		$languageFactory = self::makeInstance('TYPO3\\CMS\\Core\\Localization\\LocalizationFactory');
 		return $languageFactory->getParsedData($fileRef, $langKey, $charset, $errorMode);
+	}
+
+	static public function trimExplode($sep, $string)
+	{
+		$pieces = explode($sep, $string);
+		$pieces = array_map('trim', $pieces);
+		$pieces = array_filter($pieces);
+		return $pieces;
 	}
 
 }

@@ -9,7 +9,7 @@ class t3lib_extMgm {
 		if ($ext == 'sl_countusers') {
 			return __DIR__.'/../sl_countusers/';
 		}
-		return __DIR__.'/../';
+		return __DIR__.'/../../../';
 	}
 
 	static function siteRelPath($ext) {
